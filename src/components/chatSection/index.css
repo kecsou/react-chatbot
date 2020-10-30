@@ -1,27 +1,27 @@
 .chat-message-item {
-    margin-top: 25px;
-    padding-left: 10px;
-    padding-right: 10px;
+  margin-top: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .chat-message-item-sended {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .chat-message-item-bot span {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 0px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 0px;
 }
 
 .chat-message-item-sended span {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 0px;
 }
 
 .chat-message-item span {
-    background-color: gray;
-    padding: 10px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+  background-color: gray;
+  padding: 10px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
