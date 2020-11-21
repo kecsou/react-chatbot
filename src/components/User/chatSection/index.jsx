@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Grid, Input } from '@material-ui/core';
 
@@ -20,7 +20,16 @@ const ChatMessageItem = ({ content = '', fromBot = false }) => {
   );
 };
 
-const ChatSection = ({ dispatch, messages = [] }) => {
+const selector = ({ chat: { messages }, botList }) => ({
+  botList,
+  messages,
+});
+
+const ChatSection = () => {
+
+  const dispatch = useDispatch();
+  const { messages = [] } = useSelector(selector);
+
   const imageContainerRef = useRef();
   const [currentMessage, setCurrentMessage] = useState('');
   const toggleOnValueChangeInput = useCallback((e) => {
@@ -44,11 +53,11 @@ const ChatSection = ({ dispatch, messages = [] }) => {
         elt.scrollTop = elt.scrollHeight;
       }
     },
-    [currentMessage, imageContainerRef],
+    [currentMessage, dispatch, imageContainerRef],
   );
 
   return (
-    <Grid xs={9} style={{ height: '100%' }}>
+    <Grid item xs={9} style={{ height: '100%' }}>
       <div ref={imageContainerRef} style={{ height: '95%', overflow: 'auto' }}>
         {messages.map(({ id, content, fromBot }) => (
           <ChatMessageItem key={id} content={content} fromBot={fromBot} />
@@ -66,9 +75,5 @@ const ChatSection = ({ dispatch, messages = [] }) => {
   );
 };
 
-const mapStateToProps = ({ chat: { messages }, botList }) => ({
-  botList,
-  messages,
-});
 
-export default connect(mapStateToProps)(ChatSection);
+export default ChatSection;

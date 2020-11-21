@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import botList from './components/botList/reducer';
-import chat from './components/chatSection/reducer';
+import members from './components/User/members/reducer';
+import chat from './components/User/chatSection/reducer';
 
 const reducers = combineReducers({
-  botList,
   chat,
+  members,
 });
 
 export default reducers;
