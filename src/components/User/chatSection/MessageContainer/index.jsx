@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import ItemPlainMessage from './ItemPlainMessage';
+import ItemYoutubeMessage from './ItemYoutubeMessage';
 
 const useStyle = makeStyles({
   root: {
@@ -40,20 +41,30 @@ const MessageContainer = () => {
       ref={imageContainerRef}
     >
       {
-        messages.map(({ id, content, date, from, type }) => {
-          switch (type) {
+        messages.map((item) => {
+          switch (item.type) {
             case 'plain':
               return (
                 <ItemPlainMessage
-                  key={id}
-                  content={content}
-                  date={date}
-                  from={from}
+                  key={item.id}
+                  content={item.content}
+                  date={item.date}
+                  from={item.from}
+                />
+              );
+            case 'youtube':
+              return (
+                <ItemYoutubeMessage
+                  from={item.from}  
+                  items={item.items}
+                  key={item.id}
+                  type={item.type}
+                  query={item.query}
                 />
               );
 
             default:
-              return (<></>);      
+              return (<div id={item.id}></div>);      
           }
         })
       }

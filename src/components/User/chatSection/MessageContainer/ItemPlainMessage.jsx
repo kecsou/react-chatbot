@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { getTextDate } from '../../../../utils';
+import MessageDescription from './MessageDescription';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,13 +18,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '5px',
     textAlign: 'center',
   },
-  desc: {
-    fontSize: '15px',
-    marginTop: '10px',
-  },
-  descUsername: {
-    color: theme.palette.secondary.main,
-  }
 }));
 
 const ItemPlainMessage = ({ content = '', date = '', from = '' }) => {
@@ -33,11 +27,7 @@ const ItemPlainMessage = ({ content = '', date = '', from = '' }) => {
       <span className={classes.content}>{content}</span>
       <br />
       <br />
-      <span className={classes.desc}>
-        <span>From </span>
-        <span className={classes.descUsername}>{from} </span>
-        <span>{getTextDate(date)}</span>
-      </span>
+      <MessageDescription date={date} from={from} />
     </div>
   );
 };
