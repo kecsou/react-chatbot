@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 
-import { Grid } from '@material-ui/core';
+import { Grid} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 import ChatSection from './chatSection/index';
 import Members from './members/index';
 import { useSocket } from '../../SocketContext';
-import { useHistory } from 'react-router-dom';
 
 const User = () => {
   const { connected } = useSocket();
   const history = useHistory();
-
   useEffect(() => {
     if (!connected) {
       history.push('/');

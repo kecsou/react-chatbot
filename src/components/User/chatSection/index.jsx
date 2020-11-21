@@ -1,36 +1,45 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Grid, Input } from '@material-ui/core';
+import { Grid, Input, makeStyles } from '@material-ui/core';
 
-import { actionAddMessage } from './actions';
+import MessageContainer from './MessageContainer/index';
+import { useSocket } from '../../../SocketContext';
 
 import './index.css';
 
-const ChatMessageItem = ({ content = '', fromBot = false }) => {
-  const className = `chat-message-item ${
-    fromBot ? 'chat-message-item-bot' : 'chat-message-item-sended'
-  }`;
-
-  return (
-    <div className={className}>
-      <span>{content}</span>
-    </div>
-  );
-};
-
-const selector = ({ chat: { messages }, botList }) => ({
-  botList,
-  messages,
+const useStyle = makeStyles({
+  root: {
+    height: '100%',
+  },
+  input: {
+    width: '100%',
+    position: 'fixed',
+    bottom: 0,
+  },
+  form: {
+    height: '5%',
+  },
+  formContainer: {
+    height: '95%',
+    overflow: 'auto',
+  },
 });
+
+const selector = ({ user: { name } }) => ({ name });
 
 const ChatSection = () => {
 
+  const classes = useStyle();
+  
   const dispatch = useDispatch();
-  const { messages = [] } = useSelector(selector);
+  const {
+    socket
+  } = useSocket();
 
-  const imageContainerRef = useRef();
+  const { name } = useSelector(selector);
+
   const [currentMessage, setCurrentMessage] = useState('');
   const toggleOnValueChangeInput = useCallback((e) => {
     setCurrentMessage(e.target.value);
@@ -41,31 +50,30 @@ const ChatSection = () => {
       e.preventDefault();
 
       if (currentMessage.trim() !== '') {
-        const newMessage = {
+        const messageDTO = {
+          from: name,
           content: currentMessage,
-          fromBot: false,
         };
-
-        dispatch(actionAddMessage(newMessage));
+        socket.emit('message-send', messageDTO);
         setCurrentMessage('');
-
-        const { current: elt } = imageContainerRef;
-        elt.scrollTop = elt.scrollHeight;
       }
     },
-    [currentMessage, dispatch, imageContainerRef],
+    [currentMessage, dispatch, name, socket],
   );
 
   return (
-    <Grid item xs={9} style={{ height: '100%' }}>
-      <div ref={imageContainerRef} style={{ height: '95%', overflow: 'auto' }}>
-        {messages.map(({ id, content, fromBot }) => (
-          <ChatMessageItem key={id} content={content} fromBot={fromBot} />
-        ))}
-      </div>
-      <form style={{ height: '5%' }} onSubmit={toggleOnSubmit}>
+    <Grid
+      className={classes.root}
+      item
+      xl={9}
+      lg={9}
+      md={9}
+      xs={10}
+    >
+      <MessageContainer />
+      <form className={classes.form} onSubmit={toggleOnSubmit}>
         <Input
-          style={{ width: '100%', position: 'fixed', bottom: 0 }}
+          className={classes.input}
           onChange={toggleOnValueChangeInput}
           value={currentMessage}
           placeholder="Envoyer un message"

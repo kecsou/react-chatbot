@@ -6,10 +6,14 @@ import React, {
   useState,
 } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { io } from 'socket.io-client';
-import { actionSetMessages } from './components/User/chatSection/actions';
+import {
+  actionAddMessage,
+  actionSetMessages,
+} from './components/User/chatSection/actions';
+
 import {
   actionSetBotList,
   actionSetUserList,
@@ -29,8 +33,12 @@ const socketContext = createContext(defaultValue);
 
 export const useSocket = () => useContext(socketContext);
 
+const selector = ({ user: { description, name } }) => ({ description, name });
+
 const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
+
+  const { description, name } = useSelector(selector);
 
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
@@ -45,14 +53,12 @@ const SocketProvider = ({ children }) => {
     }
   }, [socket]);
 
-  const loginIn = useCallback((username, description) => {
+  const loginIn = useCallback(() => {
     return new Promise((resolve) => {
       const socket = io(serverAdress, {
         query: {
-          username,
+          username: name,
           description,
-          latitude: 0,
-          longitude: 0,
         },
         transports: ['websocket', 'polling']
       });
@@ -74,9 +80,13 @@ const SocketProvider = ({ children }) => {
         dispatch(actionSetMessages(messages));
       });
 
+      socket.on('message', (message) => {
+        dispatch(actionAddMessage(message));
+      });
+
       setSocket(socket);
     });
-  }, [dispatch]);
+  }, [description, dispatch, name]);
 
   const logOut = useCallback(() => {
     

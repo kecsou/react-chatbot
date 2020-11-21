@@ -1,5 +1,6 @@
 import {
-  CHAT_SECTION_ADD_MESSAGE, CHAT_SECTION_SET_MESSAGES,
+  CHAT_SECTION_ADD_MESSAGE,
+  CHAT_SECTION_SET_MESSAGES,
 } from './actions';
 
 const initialState = {

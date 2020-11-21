@@ -13,6 +13,8 @@ import {
 
 import { makeStyles } from '@material-ui/core/styles';
 import { useSocket } from '../../SocketContext';
+import { useDispatch } from 'react-redux';
+import { actionUserSetDescription, actionUserSetName } from '../User/action';
 
 const useStyles = makeStyles({
   root: {
@@ -48,27 +50,26 @@ const useStyles = makeStyles({
 const Auth = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [username, setUsername] = useState('');
-  const [description, setDescription] = useState('');
+  const dispatch = useDispatch();
   const [connecting, setConnecting] = useState(false);
 
   const { loginIn } = useSocket();
 
   const handleChangeUsername = useCallback((e) => {
-    setUsername(e.target.value);
-  }, []);
+    dispatch(actionUserSetName(e.target.value));
+  }, [dispatch]);
 
   const handleChangeDescription = useCallback((e) => {
-    setDescription(e.target.value);
-  }, []);
+    dispatch(actionUserSetDescription(e.target.value));
+  }, [dispatch]);
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setConnecting(true);
-    await loginIn(username, description);
+    await loginIn();
     setConnecting(false);
     history.push('/user');
-  }, [description, loginIn, history, username]);
+  }, [loginIn, history]);
 
   return (
     <Grid className={classes.root}>
