@@ -59,12 +59,10 @@ const Auth = () => {
   const { description, name } = useSelector(selector);
 
   useEffect(() => {
-    console.log('connected', connected);
     if (!connected) {
       const username = localStorage.getItem('username');
       const description = localStorage.getItem('description');
-      console.log('username', username);
-      console.log('description', description);
+
       if (username !== null && description !== null) {
         loginIn(username, description);
       }
