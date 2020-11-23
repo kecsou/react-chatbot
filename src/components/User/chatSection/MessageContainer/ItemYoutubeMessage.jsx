@@ -9,7 +9,7 @@ import YouTube from 'react-youtube';
 import Typography from '@material-ui/core/Typography';
 import MessageDescription from './MessageDescription';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '25px'
   },
@@ -21,12 +21,13 @@ const useStyles = makeStyles({
     color: 'rgba(255, 255, 255, 0.54)',
   },
   title: {
+    color: theme.palette.secondary.main,
     textAlign: 'left'
   },
   tile: {
     backgroundColor: 'rgba(124, 197, 237, 0.5)',
   },
-});
+}));
 
 const ItemVideoContainer = ({ description = '', title = '', videoId = '', }) => {
   const [playing, setPlaying] = useState(false);
@@ -78,9 +79,9 @@ const ItemYoutubeMessage = ({
         gutterBotto
       >
         Youtube search: 
-        <br />
-        <MessageDescription date={date} from={from} />
       </Typography>
+      <br />
+      <MessageDescription date={date} from={from} />
       <GridList cellHeight={180} className={classes.gridList}>
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">{query}</ListSubheader>
