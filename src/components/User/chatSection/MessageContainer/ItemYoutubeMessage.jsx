@@ -23,6 +23,9 @@ const useStyles = makeStyles({
   title: {
     textAlign: 'left'
   },
+  tile: {
+    backgroundColor: 'rgba(124, 197, 237, 0.5)',
+  },
 });
 
 const ItemVideoContainer = ({ description = '', title = '', videoId = '', }) => {
@@ -36,6 +39,8 @@ const ItemVideoContainer = ({ description = '', title = '', videoId = '', }) => 
     setPlaying(false);
   }, []);
 
+  const classes = useStyles();
+
   return (
     <GridListTile style={{ height: 'auto', width: '50%' }}>
       <YouTube
@@ -47,6 +52,7 @@ const ItemVideoContainer = ({ description = '', title = '', videoId = '', }) => 
       {
         !playing && (
           <GridListTileBar
+            className={classes.tile}
             title={title}
             subtitle={<span>{description}</span>}
           />
