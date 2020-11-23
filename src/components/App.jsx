@@ -33,9 +33,9 @@ const theme = createMuiTheme({
 function App() {
   return (
     <Provider store={store}>
-      <SocketProvider>
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <ThemeProvider theme={theme}>
+          <SocketProvider>
             <Switch>
               <Route path="/user">
                 <User />
@@ -44,9 +44,9 @@ function App() {
                 <Auth />
               </Route>
             </Switch>
-          </ThemeProvider>
+          </SocketProvider>
         </BrowserRouter>
-      </SocketProvider>
+        </ThemeProvider>
     </Provider>
   );
 }

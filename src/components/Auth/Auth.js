@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import {
   Button,
@@ -7,13 +7,11 @@ import {
   TextField,
 } from '@material-ui/core';
 
-import {
-  useHistory
-} from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+
 import { useSocket } from '../../SocketContext';
-import { useDispatch } from 'react-redux';
+
 import { actionUserSetDescription, actionUserSetName } from '../User/action';
 
 const useStyles = makeStyles({
@@ -47,13 +45,31 @@ const useStyles = makeStyles({
   },
 });
 
+const selector = ({ user: { description, name } }) => ({ description, name });
+
 const Auth = () => {
   const classes = useStyles();
-  const history = useHistory();
   const dispatch = useDispatch();
-  const [connecting, setConnecting] = useState(false);
+  const [
+    connecting,
+    setConnecting
+  ] = useState(false);
 
-  const { loginIn } = useSocket();
+  const { connected, loginIn } = useSocket();
+  const { description, name } = useSelector(selector);
+
+  useEffect(() => {
+    console.log('connected', connected);
+    if (!connected) {
+      const username = localStorage.getItem('username');
+      const description = localStorage.getItem('description');
+      console.log('username', username);
+      console.log('description', description);
+      if (username !== null && description !== null) {
+        loginIn(username, description);
+      }
+    }
+  }, [connected]);
 
   const handleChangeUsername = useCallback((e) => {
     dispatch(actionUserSetName(e.target.value));
@@ -66,10 +82,9 @@ const Auth = () => {
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setConnecting(true);
-    await loginIn();
+    await loginIn(name, description);
     setConnecting(false);
-    history.push('/user');
-  }, [loginIn, history]);
+  }, [description, loginIn, name]);
 
   return (
     <Grid className={classes.root}>

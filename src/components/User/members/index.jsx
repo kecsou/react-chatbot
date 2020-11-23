@@ -1,13 +1,32 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 
 import './index.css';
 
-const selector = ({ members: { botList } }) => ({ botList });
+const useStyle = makeStyles((theme) => ({
+  username: {
+    color: theme.palette.secondary.main
+  }
+}));
+
+const selector = ({
+  members: {
+    botList,
+    userList,
+  },
+}) => ({
+  botList,
+  userList
+});
 
 const BotList = () => {
-  const { botList = [] } = useSelector(selector);
+  const {
+    botList = [],
+    userList = [],
+  } = useSelector(selector);
+
+  const classes = useStyle();
 
   return (
     <Grid
@@ -18,10 +37,18 @@ const BotList = () => {
       xs={2}
     >
       {
+        userList.map(({ id, username, description }) => (
+          <div key={id} className="bot-list-item">
+            <p className={classes.username}>{username}</p>
+            <p>{description}</p>
+          </div>
+        ))
+      }
+      {
         botList.map(({ id, name, description }) => 
           (
             <div key={id} className="bot-list-item">
-              <p>{name}</p>
+              <p className={classes.username}>{name}</p>
               <p>{description}</p>
             </div>
           )

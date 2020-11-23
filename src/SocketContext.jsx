@@ -6,9 +6,11 @@ import React, {
   useState,
 } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { io } from 'socket.io-client';
+import { actionUserSetDescription, actionUserSetName } from './components/User/action';
 import {
   actionAddMessage,
   actionSetMessages,
@@ -33,15 +35,12 @@ const socketContext = createContext(defaultValue);
 
 export const useSocket = () => useContext(socketContext);
 
-const selector = ({ user: { description, name } }) => ({ description, name });
-
 const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
 
-  const { description, name } = useSelector(selector);
-
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (socket !== null && socket.connected) {
@@ -53,19 +52,25 @@ const SocketProvider = ({ children }) => {
     }
   }, [socket]);
 
-  const loginIn = useCallback(() => {
+  const loginIn = useCallback((username, description) => {
     return new Promise((resolve) => {
       const socket = io(serverAdress, {
         query: {
-          username: name,
+          username,
           description,
         },
         transports: ['websocket', 'polling']
       });
 
+      localStorage.setItem('username', username);
+      localStorage.setItem('description', description);
+
+      dispatch(actionUserSetName(username));
+      dispatch(actionUserSetDescription(description));
       socket.on('connect', () => {
         resolve();
         setConnected(true);
+        history.push('/user');
       });
 
       socket.on('users', (users) => {
@@ -86,11 +91,17 @@ const SocketProvider = ({ children }) => {
 
       setSocket(socket);
     });
-  }, [description, dispatch, name]);
+  }, [dispatch, history]);
 
   const logOut = useCallback(() => {
-    
-  }, []);
+    localStorage.setItem('username', '');
+    localStorage.setItem('description', '');
+
+    dispatch(actionUserSetName(''));
+    dispatch(actionUserSetDescription(''));
+    socket.close();
+    history.push('/');
+  }, [dispatch, history, socket]);
 
   return (
     <socketContext.Provider
