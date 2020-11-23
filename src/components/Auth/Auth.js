@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Button,
   CircularProgress,
+  Fade,
   Grid,
   TextField,
 } from '@material-ui/core';
@@ -139,13 +140,15 @@ const Auth = () => {
         </form>
         {
           error !== "" && (
-            <Alert
-              className={classes.alert}  
-              variant="filled"
-              severity="error"
-            >
-              {error}
-            </Alert>
+            <Fade in>
+              <Alert
+                className={classes.alert}  
+                variant="filled"
+                severity="error"
+              >
+                {error}
+              </Alert>
+            </Fade>
           )
         }
         {
