@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import ItemPlainMessage from './ItemPlainMessage';
 import ItemYoutubeMessage from './ItemYoutubeMessage';
+import ItemTMDB from './ItemTMDB';
+import ItemWeatherstack from './ItemWeatherstack';
 
 const useStyle = makeStyles({
   root: {
@@ -62,7 +64,32 @@ const MessageContainer = () => {
                   query={item.query}
                 />
               );
-
+            case 'tmdb':
+              return (
+                <ItemTMDB
+                  date={item.date}
+                  from={item.from}
+                  items={item.items}
+                  key={item.id}
+                  name={item.name}
+                  page={item.page}
+                  total_pages={item.total_pages}
+                />
+              );
+            case 'weatherstack':
+              return (
+                <ItemWeatherstack
+                  date={item.date}
+                  from={item.from}
+                  key={item.id}
+                  humidity={item.humidity}
+                  localtime={item.localtime}
+                  query={item.query}
+                  temperature={item.temperature}
+                  weatherIcon={item.weatherIcon}
+                  windSpeed={item.windSpeed}
+                />
+              );
             default:
               return (<div id={item.id}></div>);      
           }
