@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import MessageDescription from './MessageDescription';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 500,
     marginTop: '25px'
@@ -20,8 +20,11 @@ const useStyles = makeStyles({
     paddingTop: '10px',
     paddingLeft: '10px',
     marginBottom: '15px',
-  }
-});
+  },
+  townName: {
+    color: theme.palette.secondary.main,
+  },
+}));
 
 const ItemWeatherstack = ({
   date = '',
@@ -40,14 +43,19 @@ const ItemWeatherstack = ({
     <Card className={classes.root}>
       <CardActionArea>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">{query}</Typography>
+          <Typography
+            className={classes.townName}
+            gutterBottom
+            variant="h5"
+            component="h2"
+          >{query}</Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {description}
           </Typography>
           <Paper className={classes.infos}>
             <p>Humidity: {humidity}</p>
             <p>Localtime: {localDate.getHours()}:{localDate.getMinutes()}</p>
-            <p>Temperatur: {temperature} degrés</p>
+            <p>Temperatur: {temperature}</p>
             <p>Win speed: {windSpeed}</p>
           </Paper>
           <MessageDescription date={date} from={from}/>
