@@ -9,6 +9,7 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 
 import { useSocket } from '../../SocketContext';
 
@@ -43,6 +44,11 @@ const useStyles = makeStyles({
   logo: {
     height: 250,
   },
+  alert: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  }
 });
 
 const selector = ({ user: { description, name } }) => ({ description, name });
@@ -55,6 +61,7 @@ const Auth = () => {
     setConnecting
   ] = useState(false);
 
+  const [error, setError] = useState("");
   const { connected, loginIn } = useSocket();
   const { description, name } = useSelector(selector);
 
@@ -63,7 +70,7 @@ const Auth = () => {
       const username = localStorage.getItem('username');
       const description = localStorage.getItem('description');
 
-      if (username !== null && description !== null) {
+      if (username && description) {
         loginIn(username, description);
       }
     }
@@ -79,6 +86,18 @@ const Auth = () => {
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
+
+    if (name.trim() === '') {
+      setError('You must provide a username');
+      return;
+    }
+
+    if (description.trim() === '') {
+      setError('You must provide a description.');
+      return;
+    }
+
+    setError('');
     setConnecting(true);
     await loginIn(name, description);
     setConnecting(false);
@@ -118,6 +137,17 @@ const Auth = () => {
             Login
           </Button>
         </form>
+        {
+          error !== "" && (
+            <Alert
+              className={classes.alert}  
+              variant="filled"
+              severity="error"
+            >
+              {error}
+            </Alert>
+          )
+        }
         {
           connecting && (
             <CircularProgress style={{ position: 'absolute' }} />
