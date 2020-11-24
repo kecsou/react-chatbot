@@ -40,6 +40,7 @@ const SocketProvider = ({ children }) => {
 
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
+  const [connecting, setConnecting] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const SocketProvider = ({ children }) => {
   }, [socket]);
 
   const loginIn = useCallback((username, description) => {
+    setConnecting(true);
     return new Promise((resolve) => {
       const socket = io(serverAdress, {
         query: {
@@ -70,6 +72,7 @@ const SocketProvider = ({ children }) => {
       socket.on('connect', () => {
         resolve();
         setConnected(true);
+        setConnecting(false);
         history.push('/user');
       });
 
@@ -107,6 +110,7 @@ const SocketProvider = ({ children }) => {
     <socketContext.Provider
       value={{
         connected,
+        connecting,
         socket,
         socketOpened: socket !== null && socket.connected,
         loginIn,

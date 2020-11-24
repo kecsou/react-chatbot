@@ -12,12 +12,13 @@ import { useSocket } from '../../SocketContext';
 const User = () => {
   const {
     connected,
+    connecting,
     loginIn,
     logOut
   } = useSocket();
 
   useEffect(() => {
-    if (!connected) {
+    if (!connected && !connecting) {
       const username = localStorage.getItem('username');
       const description = localStorage.getItem('description');
 
@@ -27,7 +28,7 @@ const User = () => {
         logOut();
       }
     }
-  }, [connected, loginIn, logOut]);
+  }, [connected, connecting, loginIn, logOut]);
 
   return (
     <div className="App">
