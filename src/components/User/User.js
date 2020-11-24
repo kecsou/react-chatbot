@@ -22,7 +22,7 @@ const User = () => {
       const username = localStorage.getItem('username');
       const description = localStorage.getItem('description');
 
-      if (username !== null && description !== null) {
+      if (username && description) {
         loginIn(username, description);
       } else {
         logOut();
