@@ -49,6 +49,7 @@ const ItemPosterContainer = ({ overview = '', poster_path = '', title = '', }) =
       <GridListTileBar
         title={title}
         subtitle={<span>{overview}</span>}
+        style={{ backgroundColor: 'rgba(124, 197, 237, 0.5)' }}
       />
   </GridListTile>
   );
