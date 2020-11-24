@@ -97,12 +97,15 @@ const SocketProvider = ({ children }) => {
   }, [dispatch, history]);
 
   const logOut = useCallback(() => {
-    localStorage.setItem('username', '');
-    localStorage.setItem('description', '');
+    localStorage.removeItem('username');
+    localStorage.removeItem('description');
 
     dispatch(actionUserSetName(''));
     dispatch(actionUserSetDescription(''));
-    socket.close();
+    if (socket) {
+      socket.close();
+    }
+
     history.push('/');
   }, [dispatch, history, socket]);
 
