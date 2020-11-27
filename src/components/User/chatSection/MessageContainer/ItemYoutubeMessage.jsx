@@ -24,8 +24,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     textAlign: 'left'
   },
-  tile: {
-    backgroundColor: 'rgba(17, 86, 123, 0.5)'
+  rootVideoContainer: {
+    height: 'auto',
+    width: '50%',
+    paddingRight:'25px',
+    paddingTop:'25px',
   },
 }));
 
@@ -43,7 +46,7 @@ const ItemVideoContainer = ({ description = '', title = '', videoId = '', }) => 
   const classes = useStyles();
 
   return (
-    <GridListTile style={{ height: 'auto', width: '50%' }}>
+    <GridListTile className={classes.rootVideoContainer}>
       <YouTube
         opts={{width: '100%'}}
         onPlay={onPlay}
