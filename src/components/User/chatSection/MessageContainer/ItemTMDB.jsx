@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
-import MessageDescription from './MessageDescription';
 
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -15,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
+import MessageDescription from './MessageDescription';
 import './index';
 import { getMonthAsString } from '../../../../utils';
 
@@ -115,7 +115,7 @@ const ItemPosterContainer = ({
     setOpen(false);
   }, []);
 
-  const date = useMemo(() => new Date(), [releaseDate]);
+  const date = useMemo(() => new Date(releaseDate), [releaseDate]);
 
   return (
     <GridListTile className={classes.gridListTile}>
