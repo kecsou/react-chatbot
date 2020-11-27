@@ -28,13 +28,10 @@ const useStyles = makeStyles((theme) => ({
   },
   gridListTile: {
     height: 'auto',
-    paddingLeft: 30,
     paddingRight: 30,
   },
   poster: {
-    display: 'block',
     height: '100%',
-    margin: '0 auto',
     width: 'auto',
     cursor: 'pointer',
   },
