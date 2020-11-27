@@ -1,6 +1,6 @@
 import React, { useEffect, } from 'react';
 
-import { Grid} from '@material-ui/core';
+import { Grid, makeStyles} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,14 @@ import ChatSection from './chatSection/index';
 import Members from './members/index';
 import { useSocket } from '../../SocketContext';
 
+const useStyle = makeStyles({
+  containerAppBar: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+});
+
 const User = () => {
   const {
     connected,
@@ -16,6 +24,8 @@ const User = () => {
     loginIn,
     logOut
   } = useSocket();
+
+  const classes = useStyle();
 
   useEffect(() => {
     if (!connected && !connecting) {
@@ -34,12 +44,20 @@ const User = () => {
     <div className="App">
       <AppBar position="static">
         <Toolbar>
-          <Button
+          <div className={classes.containerAppBar}>
+            <Button
             color="inherit"
             onClick={logOut}
           >
             Log out
           </Button>
+          <img
+            alt="React Node"
+            src="./icon.png"
+            width="75px"
+          />
+          </div>
+          
         </Toolbar>
       </AppBar>
       <Grid

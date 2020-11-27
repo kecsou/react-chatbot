@@ -114,7 +114,7 @@ const Auth = () => {
         <img
           alt="Logo"
           className={classes.logo}
-          src="chatbot.png"
+          src="icon.png"
         />
         <form
           className={classes.form}
