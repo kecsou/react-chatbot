@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 
 import GridList from '@material-ui/core/GridList';
@@ -12,7 +12,11 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
+
 import './index';
+import { getMonthAsString } from '../../../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +61,17 @@ const useStyles = makeStyles((theme) => ({
   rootDialogContent: {
     padding: theme.spacing(2),
     backgroundColor: theme.palette.background.default
+  },
+  votes: {
+    position: 'relative',
+    left: 10,
+    bottom: 5,
+  },
+  box: {
+    marginTop: 15,
+  },
+  releaseDate: {
+    color: theme.palette.secondary.main
   }
 }));
 
@@ -81,7 +96,14 @@ const DialogContent = (props) => {
   );
 };
 
-const ItemPosterContainer = ({ overview = '', poster_path = '', title = '', }) => {
+const ItemPosterContainer = ({
+  overview = '',
+  poster_path = '',
+  releaseDate = '',
+  title = '',
+  voteAverage = '',
+  voteCount = '',
+}) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
@@ -92,6 +114,8 @@ const ItemPosterContainer = ({ overview = '', poster_path = '', title = '', }) =
   const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
+
+  const date = useMemo(() => new Date(), [releaseDate]);
 
   return (
     <GridListTile className={classes.gridListTile}>
@@ -114,14 +138,24 @@ const ItemPosterContainer = ({ overview = '', poster_path = '', title = '', }) =
           onClose={handleClose}
         >
           {title}
+          <Typography component="p">
+            Release
+            {'   '}
+            <span className={classes.releaseDate}>{getMonthAsString(date.getMonth() + 1)}  {date.getFullYear()}</span>
+          </Typography>
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
             {overview}
           </Typography>
+          <Box component="fieldset" mb={3} borderColor="transparent" className={classes.box}>
+            <Rating name="read-only" value={voteAverage/2} readOnly precision={0.01} />
+            <Typography className={classes.votes}>
+              {voteCount} Votes
+            </Typography>
+          </Box>
         </DialogContent>
       </Dialog>
-
   </GridListTile>
   );
 };
@@ -147,7 +181,10 @@ const ItemTMDB = ({ date, from = '', items }) => {
               key={item.id}
               overview={item.overview}
               poster_path={item.poster_path}
+              releaseDate={item.release_date}
               title={item.title}
+              voteAverage={item.vote_average}
+              voteCount={item.vote_count}
             />
           ))
         }
