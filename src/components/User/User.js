@@ -33,36 +33,36 @@ const User = () => {
   return (
     <div className="App">
       <AppBar position="static">
-          <Toolbar>
-            <Button
-              color="inherit"
-              onClick={logOut}
-            >
-              Log out
-            </Button>
-          </Toolbar>
-        </AppBar>
+        <Toolbar>
+          <Button
+            color="inherit"
+            onClick={logOut}
+          >
+            Log out
+          </Button>
+        </Toolbar>
+      </AppBar>
       <Grid
         container
         direction="row"
-        style={{ width: '100%', height: '90%' }}
+        style={{ width: '100%', height: 'calc(100% - 65px)' }}
       >
         <Grid
           item
-          xl={3}
-          lg={3}
+          xl={2}
+          lg={2}
           md={3}
-          xs={4}
+          xs={5}
           style={{ height: '100%' }}
         >
           <Members />
         </Grid>
         <Grid
           item
-          xl={9}
-          lg={9}
+          xl={10}
+          lg={10}
           md={9}
-          xs={8}
+          xs={7}
           style={{ height: '100%' }}
         >
           <ChatSection />

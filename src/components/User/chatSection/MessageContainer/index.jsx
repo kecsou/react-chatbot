@@ -18,7 +18,7 @@ const useStyle = makeStyles({
     bottom: 0,
   },
   messageContainer: {
-    height: '100%',
+    height: 'calc(100% - 35px)',
     overflow: 'auto',
   },
 });
