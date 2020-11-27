@@ -1,6 +1,7 @@
 .grid-list {
   flex-wrap: nowrap !important;
   transform: translateZ(0);
+  padding-bottom: 15px !important;
 }
 
 #message-container, .grid-list {
