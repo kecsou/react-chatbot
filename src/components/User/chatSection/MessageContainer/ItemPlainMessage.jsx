@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
+import Emoji from "react-emoji-render";
 
 import MessageDescription from './MessageDescription';
 
@@ -26,7 +27,7 @@ const ItemPlainMessage = ({ content = '', date = '', from = '' }) => {
   return (
     <div className={classes.root}>
       <Typography className={classes.content}>
-      {content}
+        <Emoji text={content} />
       </Typography>
       <br />
       <br />
