@@ -1,0 +1,29 @@
+.grid-list {
+  flex-wrap: nowrap !important;
+  transform: translateZ(0);
+}
+
+#message-container, .grid-list {
+  --scrollbarBG: #181a1b;
+  --thumbBG: rgba(17, 86, 123, 0.5);
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+#message-container::-webkit-scrollbar {
+  width: 11px;
+}
+
+.grid-list::-webkit-scrollbar {
+  height: 11px;
+}
+
+#message-container::-webkit-scrollbar-track, .grid-list::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+
+#message-container::-webkit-scrollbar-thumb, .grid-list::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}

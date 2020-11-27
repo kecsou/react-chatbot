@@ -6,6 +6,8 @@ import ItemYoutubeMessage from './ItemYoutubeMessage';
 import ItemTMDB from './ItemTMDB';
 import ItemWeatherstack from './ItemWeatherstack';
 
+import './index.css';
+
 const useStyle = makeStyles({
   root: {
     height: '100%',
@@ -15,11 +17,8 @@ const useStyle = makeStyles({
     position: 'fixed',
     bottom: 0,
   },
-  form: {
-    height: '5%',
-  },
-  formContainer: {
-    height: '95%',
+  messageContainer: {
+    height: '100%',
     overflow: 'auto',
   },
 });
@@ -39,7 +38,9 @@ const MessageContainer = () => {
 
   return (
     <div
-      className={classes.formContainer}
+      id="message-container"
+      className={classes.messageContainer}
+      data-simplebar
       ref={imageContainerRef}
     >
       {
@@ -72,8 +73,6 @@ const MessageContainer = () => {
                   items={item.items}
                   key={item.id}
                   name={item.name}
-                  page={item.page}
-                  total_pages={item.total_pages}
                 />
               );
             case 'weatherstack':

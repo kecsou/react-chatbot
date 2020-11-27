@@ -1,8 +1,6 @@
 import React, { useMemo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import Fab from '@material-ui/core/Fab';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import MessageDescription from './MessageDescription';
@@ -12,7 +10,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 500,
     marginTop: '25px',
+    marginBottom: '10px',
     position: 'relative',
+    backgroundColor: theme.palette.primary.main,
   },
   icon: {
     width: '100px',
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '15px',
   },
   townName: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.text.primary
   },
   weatherIcon: {
     position: 'absolute',
@@ -35,15 +35,6 @@ const useStyles = makeStyles((theme) => ({
     margin: 10
   },
 }));
-
-const Bubble = ({ title = '', value = '' }) => {
-  return (
-    <div style={{ width: 50, height: 50, borderRadius: 50, display: 'flex', justifyContent: 'center', alignItems: 'center', borderColor: 'red', borderWidth: 3 }}>
-      <span>{title}</span>
-      <span>{value}</span>
-    </div>
-  );
-};
 
 const ItemWeatherstack = ({
   date = '',
@@ -59,39 +50,43 @@ const ItemWeatherstack = ({
   const classes = useStyles();
   const localDate = useMemo(() => new Date(localtime), [localtime]);
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography
-          className={classes.townName}
-          gutterBottom
-          variant="h5"
-          component="h2"
-        >{query}</Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {description}
-        </Typography>
-        <Grid container>
-          <Grid container item xs={6}>
-            <p>Humidity {humidity}</p>
+    <>
+      <Card className={classes.root}>
+        <CardContent>
+          <Typography
+            className={classes.townName}
+            gutterBottom
+            variant="h5"
+            component="h2"
+          >
+            {query}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {description}
+          </Typography>
+          <Grid container>
+            <Grid container item xs={6}>
+              <Typography>Humidity {humidity}</Typography>
+            </Grid>
+            <Grid container item xs={6}>
+              <Typography>Localtime {localDate.getHours()}:{localDate.getMinutes()}</Typography>
+            </Grid>
+            <Grid container item xs={6}>
+              <Typography>Temperatur {temperature}</Typography>
+            </Grid>
+            <Grid container item xs={6}>
+              <Typography>Win speed {windSpeed}</Typography>
+            </Grid>
           </Grid>
-          <Grid container item xs={6}>
-            <p>Localtime {localDate.getHours()}:{localDate.getMinutes()}</p>
-          </Grid>
-          <Grid container item xs={6}>
-            <p>Temperatur {temperature}</p>
-          </Grid>
-          <Grid container item xs={6}>
-            <p>Win speed {windSpeed}</p>
-          </Grid>
-        </Grid>
-        <img
-          className={classes.weatherIcon}
-          src={weatherIcon}
-        />
-        <br />
-        <MessageDescription date={date} from={from}/>
-      </CardContent>
-    </Card>
+          <img
+            className={classes.weatherIcon}
+            src={weatherIcon}
+          />
+          <br />
+        </CardContent>
+      </Card>
+      <MessageDescription date={date} from={from}/>
+    </>
   );
 };
 

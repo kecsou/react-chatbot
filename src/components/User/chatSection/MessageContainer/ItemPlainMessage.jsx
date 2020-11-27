@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
-import { getTextDate } from '../../../../utils';
+import { makeStyles, Typography } from '@material-ui/core';
+
 import MessageDescription from './MessageDescription';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '10px',
     paddingBottom: '5px',
     textAlign: 'center',
+    color: theme.palette.text.primary
   },
 }));
 
@@ -24,7 +25,9 @@ const ItemPlainMessage = ({ content = '', date = '', from = '' }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <span className={classes.content}>{content}</span>
+      <Typography className={classes.content}>
+      {content}
+      </Typography>
       <br />
       <br />
       <MessageDescription date={date} from={from} />

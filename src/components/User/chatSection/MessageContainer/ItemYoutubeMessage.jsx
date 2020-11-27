@@ -25,13 +25,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'left'
   },
   tile: {
-    backgroundColor: 'rgba(124, 197, 237, 0.5)',
+    backgroundColor: 'rgba(17, 86, 123, 0.5)'
   },
 }));
 
 const ItemVideoContainer = ({ description = '', title = '', videoId = '', }) => {
   const [playing, setPlaying] = useState(false);
-  
+
   const onPlay = useCallback(() => {
     setPlaying(true);
   }, []);
@@ -55,7 +55,7 @@ const ItemVideoContainer = ({ description = '', title = '', videoId = '', }) => 
           <GridListTileBar
             className={classes.tile}
             title={title}
-            subtitle={<span>{description}</span>}
+            subtitle={<Typography>{description}</Typography>}
           />
         )
       }

@@ -1,61 +1,135 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Typography from '@material-ui/core/Typography';
 import MessageDescription from './MessageDescription';
 
-const useStyles = makeStyles({
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { withStyles } from '@material-ui/core/styles';
+
+import './index';
+
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.default
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.default
+  },
+}))(MuiDialogContent);
+
+const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '25px',
     overflow: 'hidden',
   },
+  dialog: {
+    backgroundColor: 'rgba(17, 86, 123, 0.3)',
+  },
   gridList: {
     flexWrap: 'nowrap',
     transform: 'translateZ(0)',
+  },
+  gridListTile: {
+    height: 'auto',
+    paddingLeft: 30,
+    paddingRight: 30,
+    width: '45%',
   },
   poster: {
     display: 'block',
     height: '100%',
     margin: '0 auto',
     width: 'auto',
+    cursor: 'pointer',
   },
   title: {
-    textAlign: 'left'
+    textAlign: 'left',
+    color: theme.palette.secondary.main,
   },
   titleBar: {
     background:
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
-  tile: {
-    height: 'auto',
-    paddingLeft: '30px',
-    paddingRight:'30px',
-    width: '45%',
-  },
-});
+}));
 
 const ItemPosterContainer = ({ overview = '', poster_path = '', title = '', }) => {
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
+
+  const handleClickOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   return (
-    <GridListTile className={classes.tile}>
+    <GridListTile className={classes.gridListTile}>
       <img
-        className={classes.poster}
-        src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
         alt={title}
+        className={classes.poster}
+        onClick={handleClickOpen}
+        src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
       />
-      <GridListTileBar
-        title={title}
-        subtitle={<span>{overview}</span>}
-        style={{ backgroundColor: 'rgba(124, 197, 237, 0.5)' }}
-      />
+
+      <Dialog
+        aria-labelledby="customized-dialog-title"
+        className={classes.dialog}
+        onClose={handleClose}
+        open={open}
+      >
+        <DialogTitle
+          id="customized-dialog-title"
+          onClose={handleClose}
+        >
+          {title}
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            {overview}
+          </Typography>
+        </DialogContent>
+      </Dialog>
+
   </GridListTile>
   );
 };
 
-const ItemTMDB = ({ date, from = '', items, name = '', page, total_pages }) => {
+const ItemTMDB = ({ date, from = '', items }) => {
   const classes = useStyles();
 
   return (
@@ -68,10 +142,8 @@ const ItemTMDB = ({ date, from = '', items, name = '', page, total_pages }) => {
         The movie database search: 
         <br />
         <MessageDescription date={date} from={from} />
-        <br />
-        name: {name} | page: {page} | total pages: {total_pages}
       </Typography>
-      <GridList className={classes.gridList} cols={2.5}>
+      <GridList className="grid-list" cols={2.5}>
         {
           items.map((item) => (
             <ItemPosterContainer

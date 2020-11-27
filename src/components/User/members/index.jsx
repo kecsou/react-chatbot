@@ -1,10 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, makeStyles } from '@material-ui/core';
-
-import './index.css';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 
 const useStyle = makeStyles((theme) => ({
+  botListItem: {
+    width: '100%',
+    height: '50px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    display: 'flex',
+    color: theme.palette.text.primary,
+  },
   username: {
     color: theme.palette.secondary.main
   }
@@ -38,18 +45,18 @@ const BotList = () => {
     >
       {
         userList.map(({ id, username, description }) => (
-          <div key={id} className="bot-list-item">
+          <Typography key={id} className={classes.botListItem}>
             <p className={classes.username}>{username}</p>
             <p>{description}</p>
-          </div>
+          </Typography>
         ))
       }
       {
         botList.map(({ id, name, description }) => 
           (
-            <div key={id} className="bot-list-item">
-              <p className={classes.username}>{name}</p>
-              <p>{description}</p>
+            <div key={id} className={classes.botListItem}>
+              <Typography className={classes.username}>{name}</Typography>
+              <Typography>{description}</Typography>
             </div>
           )
         )

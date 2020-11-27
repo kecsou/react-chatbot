@@ -18,9 +18,6 @@ const useStyle = makeStyles({
     position: 'fixed',
     bottom: 0,
   },
-  form: {
-    height: '5%',
-  },
   formContainer: {
     height: '95%',
     overflow: 'auto',
