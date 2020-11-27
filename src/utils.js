@@ -55,6 +55,10 @@ export function getTextDate(dateString = '') {
   return 'A l\'instant';
 }
 
+/**
+ * 
+ * @param {number} monthAsNumber 
+ */
 export function getMonthAsString(monthAsNumber = 1) {
   switch (monthAsNumber) {
     case 1:
