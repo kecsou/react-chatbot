@@ -98,6 +98,7 @@ const ItemPosterContainer = ({ overview = '', poster_path = '', title = '', }) =
       <img
         alt={title}
         className={classes.poster}
+        draggable="false"
         onClick={handleClickOpen}
         src={`https://image.tmdb.org/t/p/w300/${poster_path}`}
       />
