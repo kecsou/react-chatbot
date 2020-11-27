@@ -79,7 +79,7 @@ const ItemYoutubeMessage = ({
       <Typography
         className={classes.title}
         variant="h6"
-        gutterBotto
+        gutterBottom
       >
         Youtube search: 
       </Typography>

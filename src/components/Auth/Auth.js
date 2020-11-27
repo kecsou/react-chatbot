@@ -75,7 +75,7 @@ const Auth = () => {
         loginIn(username, description);
       }
     }
-  }, [connected]);
+  }, [connected, loginIn]);
 
   const handleChangeUsername = useCallback((e) => {
     dispatch(actionUserSetName(e.target.value));

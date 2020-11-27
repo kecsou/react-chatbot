@@ -168,7 +168,7 @@ const ItemTMDB = ({ date, from = '', items }) => {
       <Typography
         className={classes.title}
         variant="h6"
-        gutterBotto
+        gutterBottom
       >
         The movie database search: 
         <br />

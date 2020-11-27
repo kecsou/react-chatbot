@@ -47,8 +47,26 @@ const User = () => {
         direction="row"
         style={{ width: '100%', height: '90%' }}
       >
-        <Members />
-        <ChatSection />
+        <Grid
+          item
+          xl={3}
+          lg={3}
+          md={3}
+          xs={4}
+          style={{ height: '100%' }}
+        >
+          <Members />
+        </Grid>
+        <Grid
+          item
+          xl={9}
+          lg={9}
+          md={9}
+          xs={8}
+          style={{ height: '100%' }}
+        >
+          <ChatSection />
+        </Grid>
       </Grid>
     </div>
   );

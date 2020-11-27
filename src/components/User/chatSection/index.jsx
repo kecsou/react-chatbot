@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { Grid, Input, makeStyles } from '@material-ui/core';
+import { Input, makeStyles } from '@material-ui/core';
 
 import MessageContainer from './MessageContainer/index';
 import { useSocket } from '../../../SocketContext';
@@ -12,25 +12,19 @@ import './index.css';
 const useStyle = makeStyles({
   root: {
     height: '100%',
+    width: '100%',
   },
   input: {
     width: '100%',
     position: 'fixed',
     bottom: 0,
   },
-  formContainer: {
-    height: '95%',
-    overflow: 'auto',
-  },
 });
 
 const selector = ({ user: { name } }) => ({ name });
 
 const ChatSection = () => {
-
   const classes = useStyle();
-  
-  const dispatch = useDispatch();
   const {
     socket
   } = useSocket();
@@ -55,18 +49,11 @@ const ChatSection = () => {
         setCurrentMessage('');
       }
     },
-    [currentMessage, dispatch, name, socket],
+    [currentMessage, name, socket],
   );
 
   return (
-    <Grid
-      className={classes.root}
-      item
-      xl={9}
-      lg={9}
-      md={9}
-      xs={10}
-    >
+    <div className={classes.root}>
       <MessageContainer />
       <form className={classes.form} onSubmit={toggleOnSubmit}>
         <Input
@@ -76,7 +63,7 @@ const ChatSection = () => {
           placeholder="Envoyer un message"
         />
       </form>
-    </Grid>
+    </div>
   );
 };
 

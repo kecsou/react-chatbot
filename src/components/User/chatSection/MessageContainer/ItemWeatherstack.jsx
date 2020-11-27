@@ -79,6 +79,7 @@ const ItemWeatherstack = ({
             </Grid>
           </Grid>
           <img
+            alt="Can not get weather state"
             className={classes.weatherIcon}
             draggable={false}
             src={weatherIcon}
