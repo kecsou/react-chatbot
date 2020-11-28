@@ -1,7 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, Typography } from '@material-ui/core';
 import Popover from '@material-ui/core/Popover';
+import { actionSetMessageToSend } from '../chatSection/actions';
 
 const useStyle = makeStyles((theme) => ({
   botListItem: {
@@ -34,10 +35,12 @@ const selector = ({
   userList
 });
 
-const ItemMemberList = ({ name = '', description = '' }) => {
+const ItemMemberList = ({ name = '', description = '', isBot = false }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const classes = useStyle();
+
+  const dispatch = useDispatch();
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -47,10 +50,22 @@ const ItemMemberList = ({ name = '', description = '' }) => {
     setAnchorEl(null);
   };
 
+  const handleDoubleClick = useCallback(() => {
+    if (!isBot) {
+      return;
+    }
+
+    dispatch(actionSetMessageToSend(description));
+
+  }, [description, dispatch, isBot]);
+
   const open = Boolean(anchorEl);
 
   return (
-    <>
+    <div
+      onDoubleClick={handleDoubleClick}
+      style={{ cursor: isBot ? 'pointer' : 'default' }}
+    >
       <Typography
         aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
@@ -79,9 +94,19 @@ const ItemMemberList = ({ name = '', description = '' }) => {
         onClose={handlePopoverClose}
         disableRestoreFocus
       >
-        <Typography>{description}</Typography>
+        <Typography>
+          {description}
+          {
+            isBot && (
+              <>
+                <br />
+                (Double click for use this template)
+              </>
+            )
+          }
+        </Typography>
       </Popover>
-    </>
+    </div>
   );
 };
 
@@ -109,6 +134,7 @@ const BotList = () => {
               key={id}
               name={name}
               description={description}
+              isBot
             />
           )
         )
