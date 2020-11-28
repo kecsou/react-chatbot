@@ -24,7 +24,7 @@ const ItemTranslate = ({
 
   const classes = useStyle();
   return (
-    <div >
+    <div>
       <Card className={classes.root}>
         <Typography>Source: {source}</Typography>
         <hr />
