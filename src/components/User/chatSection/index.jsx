@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Input, makeStyles } from '@material-ui/core';
 
@@ -8,6 +8,7 @@ import MessageContainer from './MessageContainer/index';
 import { useSocket } from '../../../SocketContext';
 
 import './index.css';
+import { actionSetMessageToSend } from './actions';
 
 const useStyle = makeStyles({
   root: {
@@ -21,7 +22,13 @@ const useStyle = makeStyles({
   },
 });
 
-const selector = ({ user: { name } }) => ({ name });
+const selector = ({
+  chat: { messageToSend },
+  user: { name }
+}) => ({
+  messageToSend,
+  name,
+});
 
 const ChatSection = () => {
   const classes = useStyle();
@@ -29,27 +36,31 @@ const ChatSection = () => {
     socket
   } = useSocket();
 
-  const { name } = useSelector(selector);
+  const {
+    messageToSend,
+    name,
+  } = useSelector(selector);
 
-  const [currentMessage, setCurrentMessage] = useState('');
+  const dispatch = useDispatch();
+
   const toggleOnValueChangeInput = useCallback((e) => {
-    setCurrentMessage(e.target.value);
-  }, []);
+    dispatch(actionSetMessageToSend(e.target.value));
+  }, [dispatch]);
 
   const toggleOnSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
-      if (currentMessage.trim() !== '') {
+      if (messageToSend.trim() !== '') {
         const messageDTO = {
           from: name,
-          content: currentMessage,
+          content: messageToSend,
         };
         socket.emit('message-send', messageDTO);
-        setCurrentMessage('');
+        dispatch(actionSetMessageToSend(''));
       }
     },
-    [currentMessage, name, socket],
+    [dispatch, messageToSend, name, socket],
   );
 
   return (
@@ -59,7 +70,7 @@ const ChatSection = () => {
         <Input
           className={classes.input}
           onChange={toggleOnValueChangeInput}
-          value={currentMessage}
+          value={messageToSend}
           placeholder="Envoyer un message"
         />
       </form>

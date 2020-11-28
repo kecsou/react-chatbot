@@ -1,10 +1,12 @@
 import {
   CHAT_SECTION_ADD_MESSAGE,
   CHAT_SECTION_SET_MESSAGES,
+  CHAT_SECTION_SET_MESSAGE_TO_SEND,
 } from './actions';
 
 const initialState = {
   messages: [],
+  messageToSend: '',
 };
 
 /**
@@ -26,6 +28,11 @@ const actionSetMessages = (state, action) => {
   return { ...state, messages: action.messages };
 };
 
+const actionSetMessageToSend = (state, action) => ({
+  ...state,
+  messageToSend: action.messageToSend
+});
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case CHAT_SECTION_ADD_MESSAGE:
@@ -33,6 +40,9 @@ export default (state = initialState, action) => {
 
     case CHAT_SECTION_SET_MESSAGES:
       return actionSetMessages(state, action);
+
+    case CHAT_SECTION_SET_MESSAGE_TO_SEND:
+      return actionSetMessageToSend(state, action);
 
     default:
       return state;
