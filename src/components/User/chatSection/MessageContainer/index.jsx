@@ -7,6 +7,7 @@ import ItemTMDB from './ItemTMDB';
 import ItemWeatherstack from './ItemWeatherstack';
 
 import './index.css';
+import ItemTranslate from './ItemTranslate';
 
 const useStyle = makeStyles({
   root: {
@@ -87,6 +88,16 @@ const MessageContainer = () => {
                   temperature={item.temperature}
                   weatherIcon={item.weatherIcon}
                   windSpeed={item.windSpeed}
+                />
+              );
+            case 'translation':
+              return (
+                <ItemTranslate
+                  date={item.date}
+                  from={item.from}
+                  key={item.id}
+                  translations={item.translations}
+                  source={item.source}
                 />
               );
             default:
