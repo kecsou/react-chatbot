@@ -13,6 +13,10 @@ const useStyle = makeStyles((theme) => ({
     color: theme.palette.text.primary,
     paddingLeft: 15,
   },
+  title: {
+    color: '#FFF',
+    paddingLeft: 15,
+  },
   username: {
     color: theme.palette.secondary.main
   },
@@ -50,7 +54,7 @@ const ItemMemberList = ({ name = '', description = '', isBot = false }) => {
     setAnchorEl(null);
   };
 
-  const handleDoubleClick = useCallback(() => {
+  const handleClick = useCallback(() => {
     if (!isBot) {
       return;
     }
@@ -63,7 +67,7 @@ const ItemMemberList = ({ name = '', description = '', isBot = false }) => {
 
   return (
     <div
-      onDoubleClick={handleDoubleClick}
+      onClick={handleClick}
       style={{ cursor: isBot ? 'pointer' : 'default' }}
     >
       <Typography
@@ -100,7 +104,7 @@ const ItemMemberList = ({ name = '', description = '', isBot = false }) => {
             isBot && (
               <>
                 <br />
-                (Double click for use this template)
+                (Click to use this template)
               </>
             )
           }
@@ -116,8 +120,11 @@ const BotList = () => {
     userList = [],
   } = useSelector(selector);
 
+  const classes = useStyle();
+
   return (
     <>
+      <Typography className={classes.title} component="h5" variant="h5">Users</Typography>
       {
         userList.map(({ id, username, description }) => (
           <ItemMemberList
@@ -127,6 +134,7 @@ const BotList = () => {
           />
         ))
       }
+      <Typography className={classes.title} component="h5" variant="h5" >Bots</Typography>
       {
         botList.map(({ id, name, description }) => 
           (
