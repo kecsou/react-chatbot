@@ -71,7 +71,7 @@ const ChatSection = () => {
           className={classes.input}
           onChange={toggleOnValueChangeInput}
           value={messageToSend}
-          placeholder="Envoyer un message"
+          placeholder="Send a message"
         />
       </form>
     </div>

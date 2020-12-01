@@ -24,35 +24,35 @@ export function getTextDate(dateString = '') {
 
   if (timePaste > year) {
     const number = parseInt(timePaste / year, 10);
-    return `Il y a ${number} an${S(number)}`;
+    return `Since ${number} year${S(number)}`;
   }
 
   if (timePaste > month) {
     const number = parseInt(timePaste / month, 10);
-    return `Il y a ${number} moi${S(number)}`;
+    return `Since ${number} month${S(number)}`;
   }
 
   if (timePaste > week) {
     const number = parseInt(timePaste / week, 10);
-    return `Il y a ${number} semaine${S(number)}`;
+    return `Since ${number} week${S(number)}`;
   }
 
   if (timePaste > day) {
     const number = parseInt(timePaste / day, 10);
-    return `Il y a ${number} jour${S(number)}`;
+    return `Since ${number} day${S(number)}`;
   }
 
   if (timePaste > hour) {
     const number = parseInt(timePaste / hour, 10);
-    return `Il y a ${number} heure${S(number)}`;
+    return `Since ${number} hour${S(number)}`;
   }
 
   if (timePaste > minute) {
     const number = parseInt(timePaste / minute, 10);
-    return `Il y a ${number} minute${S(number)}`;
+    return `Since ${number} minute${S(number)}`;
   }
 
-  return 'A l\'instant';
+  return 'Now';
 }
 
 /**
