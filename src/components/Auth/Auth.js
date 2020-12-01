@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import {
   Button,
-  CircularProgress,
   Fade,
   Grid,
   TextField,
@@ -57,10 +56,6 @@ const selector = ({ user: { description, name } }) => ({ description, name });
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [
-    connecting,
-    setConnecting
-  ] = useState(false);
 
   const [error, setError] = useState("");
   const { connected, loginIn } = useSocket();
@@ -70,7 +65,6 @@ const Auth = () => {
     if (!connected) {
       const username = localStorage.getItem('username');
       const description = localStorage.getItem('description');
-
       if (username && description) {
         loginIn(username, description);
       }
@@ -99,9 +93,7 @@ const Auth = () => {
     }
 
     setError('');
-    setConnecting(true);
     await loginIn(name, description);
-    setConnecting(false);
   }, [description, loginIn, name]);
 
   return (
@@ -149,11 +141,6 @@ const Auth = () => {
                 {error}
               </Alert>
             </Fade>
-          )
-        }
-        {
-          connecting && (
-            <CircularProgress style={{ position: 'absolute' }} />
           )
         }
       </Grid>

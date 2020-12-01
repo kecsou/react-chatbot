@@ -21,7 +21,7 @@ import {
   actionSetUserList,
 } from './components/User/members/action';
 
-const serverAdress = 'http://localhost';
+const serverAdress = process.env.serverAdress ? process.env.serverAdress : 'http://localhost';
 const defaultValue = {
   connected: false,
   connecting: false,
@@ -34,6 +34,24 @@ const defaultValue = {
 const socketContext = createContext(defaultValue);
 
 export const useSocket = () => useContext(socketContext);
+
+const getPosition = () => new Promise((resolve) => {
+  const defaultPosition = { latitude: 48.8534, longitude: 2.3488 };
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      const { latitude, longitude } = coords;
+      const position = { latitude, longitude };
+      resolve(position);
+    }, (error) => {
+      console.error(error);
+      resolve(defaultPosition);
+    }, {
+      enableHighAccuracy: true
+    });
+  } else {
+    resolve(defaultPosition);
+  }
+});
 
 const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -55,11 +73,14 @@ const SocketProvider = ({ children }) => {
 
   const loginIn = useCallback((username, description) => {
     setConnecting(true);
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
+      const { latitude, longitude }  = await getPosition();
       const socket = io(serverAdress, {
         query: {
           username,
           description,
+          latitude,
+          longitude,
         },
         transports: ['websocket', 'polling']
       });

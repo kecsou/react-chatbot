@@ -8,6 +8,7 @@ import ItemWeatherstack from './ItemWeatherstack';
 
 import './index.css';
 import ItemTranslate from './ItemTranslate';
+import ItemWhereAmI from './ItemWhereAmI';
 
 const useStyle = makeStyles({
   root: {
@@ -98,6 +99,17 @@ const MessageContainer = () => {
                   key={item.id}
                   translations={item.translations}
                   source={item.source}
+                />
+              );
+            case 'whereami':
+              return (
+                <ItemWhereAmI
+                  apiKey={item.apiKey}
+                  date={item.date}
+                  from={item.from}
+                  key = {item.id}
+                  lat={item.lat}
+                  lng={item.lng}
                 />
               );
             default:
