@@ -19,6 +19,9 @@ const useStyles = makeStyles({
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
   },
+  descriptionContainer: {
+    marginTop: 15,
+  },
 });
 
 const ItemYoutubeMessage = ({
@@ -47,11 +50,13 @@ const ItemYoutubeMessage = ({
           ))
         }
       </GridList>
-      <MessageDescription
-        by={by}
-        date={date}
-        from={from}
-      />
+      <div className={classes.descriptionContainer}>
+        <MessageDescription
+          by={by}
+          date={date}
+          from={from}
+        />
+      </div>
     </div>
   );
 };
