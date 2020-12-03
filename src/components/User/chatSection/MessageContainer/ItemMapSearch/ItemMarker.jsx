@@ -37,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     width: '100%',
   },
+  categoryContainer: {
+    display:'flex',
+    flexWrap: 'wrap',
+  }
 }));
 
 const ItemMarker = ({
@@ -114,13 +118,13 @@ const ItemMarker = ({
             typesGroupe.length > 0 && (
               <>
                 <Typography component="h5" variant="h5">Categories</Typography>
-                <div style={{ display:'flex', flexWrap: 'wrap' }}>
+                <div className={classes.categoryContainer}>
                 {
                   typesGroupe.map((group = [], index) => {
                     return (
                       <div 
                         key={group.reduce((key, current) => `${key}¤¤${current}`, '')}
-                        style={classes.rowType}
+                        className={classes.rowType}
                       >
                         {
                           group.map((type) => (
