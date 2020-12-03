@@ -10,7 +10,8 @@ import './index.css';
 import ItemTranslate from './ItemTranslate';
 import ItemWhereAmI from './ItemWhereAmI';
 import ItemMapSearch from './ItemMapSearch/index';
-import ItemMapSearchNotFound from './ItemMapSearch/ItemMapSearchNotFound';
+import ItemNoResultFound from './ItemNoResultFound';
+import ItemUnexpectedError from './ItemUnexpectedError';
 
 const useStyle = makeStyles({
   root: {
@@ -60,6 +61,7 @@ const MessageContainer = () => {
                   from={item.from}
                 />
               );
+
             case 'youtube':
               return (
                 <ItemYoutubeMessage
@@ -71,6 +73,7 @@ const MessageContainer = () => {
                   query={item.query}
                 />
               );
+
             case 'tmdb':
               return (
                 <ItemTMDB
@@ -82,6 +85,7 @@ const MessageContainer = () => {
                   name={item.name}
                 />
               );
+
             case 'weatherstack':
               return (
                 <ItemWeatherstack
@@ -97,6 +101,7 @@ const MessageContainer = () => {
                   windSpeed={item.windSpeed}
                 />
               );
+
             case 'translation':
               return (
                 <ItemTranslate
@@ -108,6 +113,7 @@ const MessageContainer = () => {
                   source={item.source}
                 />
               );
+
             case 'whereami':
               return (
                 <ItemWhereAmI
@@ -120,19 +126,8 @@ const MessageContainer = () => {
                   lng={item.lng}
                 />
               );
-            case 'mapsearch':
-              if (item.notfound) {
-                return (
-                  <ItemMapSearchNotFound
-                    by={item.by}
-                    date={item.date}  
-                    key={item.id}
-                    from={item.from}
-                    query={item.query}
-                  />
-                );
-              }
 
+            case 'mapsearch':
               return (
                 <ItemMapSearch
                   apiKey={item.apiKey}
@@ -145,6 +140,29 @@ const MessageContainer = () => {
                   lng={item.lng}
                 />
               );
+
+            case 'noresultfound':
+              return (
+                <ItemNoResultFound
+                  by={item.by}
+                  date={item.date}  
+                  key={item.id}
+                  from={item.from}
+                  query={item.query}
+                />
+              );
+
+            case 'unexpectederror':
+              return (
+                <ItemUnexpectedError
+                  by={item.by}
+                  date={item.date}  
+                  key={item.id}
+                  from={item.from}
+                  query={item.query}
+                />
+              );
+
             default:
               return (<div key={item.id}></div>);      
           }

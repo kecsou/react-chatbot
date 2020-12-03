@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Typography } from '@material-ui/core';
-import MessageDescription from '../MessageDescription';
 import { makeStyles } from '@material-ui/styles';
+import MessageDescription from './MessageDescription';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,21 +16,20 @@ const useStyles = makeStyles((theme) => ({
   query: {
     color: theme.palette.secondary.main,
   },
-}))
+}));
 
-const ItemMapSearchNotFound = ({
+const ItemUnexpectedError = ({
   by = '',
   date = '',
   from = '',
   query = ''
 }) => {
   const classes = useStyles();
-
   return (
     <>
       <div className={classes.root}>
         <Typography className={classes.message}>
-          No result found for <Typography className={classes.query}>{query}</Typography>
+          Unexpected error for <Typography className={classes.query}>{query}</Typography>
         </Typography>
       </div>
       <MessageDescription
@@ -42,4 +41,4 @@ const ItemMapSearchNotFound = ({
   );
 };
 
-export default ItemMapSearchNotFound;
+export default ItemUnexpectedError;

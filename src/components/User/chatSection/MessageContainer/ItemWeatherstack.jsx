@@ -70,13 +70,17 @@ const ItemWeatherstack = ({
               <Typography>Humidity {humidity}</Typography>
             </Grid>
             <Grid container item xs={6}>
-              <Typography>Localtime {localDate.getHours()}:{localDate.getMinutes()}</Typography>
+              <Typography>Local time {localDate.getHours()}:{localDate.getMinutes()}</Typography>
             </Grid>
             <Grid container item xs={6}>
-              <Typography>Temperatur {temperature}</Typography>
+              <Typography>
+                Temperature {temperature}°
+              </Typography>
             </Grid>
             <Grid container item xs={6}>
-              <Typography>Win speed {windSpeed}</Typography>
+              <Typography>
+                Wind speed {windSpeed}km/h
+              </Typography>
             </Grid>
           </Grid>
           <img
