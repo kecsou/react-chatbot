@@ -19,8 +19,14 @@ const MessageDescription = ({ date = '', from = '', by = '' }) => {
     <Typography className={classes.desc}>
       <Typography>From </Typography>
       <Typography className={classes.descUsername}>{from} </Typography>
-      <Typography>by </Typography>
-      <Typography className={classes.descUsername}>{by} </Typography>
+      {
+        by !== '' && (
+          <>
+            <Typography>by </Typography>
+            <Typography className={classes.descUsername}>{by} </Typography>
+          </>
+        )
+      }
       <Typography>{getTextDate(date)}</Typography>
     </Typography>
   );

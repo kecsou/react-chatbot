@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 
-import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
 
@@ -10,16 +9,11 @@ import Dialog from '@material-ui/core/Dialog';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
-import MessageDescription from './MessageDescription';
-import './index';
-import { getMonthAsString } from '../../../../utils';
-import { DialogContent, DialogTitle } from '../../../Dialog/Dialog';
+import '../index';
+import { getMonthAsString } from '../../../../../utils';
+import { DialogContent, DialogTitle } from '../../../../Dialog/Dialog';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: '25px',
-    overflow: 'hidden',
-  },
   dialog: {
     backgroundColor: 'rgba(17, 86, 123, 0.3)',
   },
@@ -35,10 +29,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: 'auto',
     cursor: 'pointer',
-  },
-  title: {
-    textAlign: 'left',
-    color: theme.palette.secondary.main,
   },
   titleBar: {
     background:
@@ -121,37 +111,4 @@ const ItemPosterContainer = ({
   );
 };
 
-const ItemTMDB = ({ date, from = '', items }) => {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Typography
-        className={classes.title}
-        variant="h6"
-        gutterBottom
-      >
-        The movie database search: 
-        <br />
-        <MessageDescription date={date} from={from} />
-      </Typography>
-      <GridList className="grid-list" cols={2.5}>
-        {
-          items.map((item) => (
-            <ItemPosterContainer
-              key={item.id}
-              overview={item.overview}
-              poster_path={item.poster_path}
-              releaseDate={item.release_date}
-              title={item.title}
-              voteAverage={item.vote_average}
-              voteCount={item.vote_count}
-            />
-          ))
-        }
-      </GridList>
-    </div>
-  );
-};
-
-export default ItemTMDB;
+export default ItemPosterContainer;

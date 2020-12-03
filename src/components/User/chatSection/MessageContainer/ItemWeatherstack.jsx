@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ItemWeatherstack = ({
+  by = '',
   date = '',
   description = '',
   from = '',
@@ -87,7 +88,11 @@ const ItemWeatherstack = ({
           <br />
         </CardContent>
       </Card>
-      <MessageDescription date={date} from={from}/>
+      <MessageDescription
+        by={by}
+        date={date}
+        from={from}
+      />
     </>
   );
 };

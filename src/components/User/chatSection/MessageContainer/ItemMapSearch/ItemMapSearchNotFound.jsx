@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Typography } from '@material-ui/core';
-import MessageDescription from './MessageDescription';
+import MessageDescription from '../MessageDescription';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({

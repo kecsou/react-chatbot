@@ -1,24 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import { makeStyles, Typography, Tooltip, Dialog, Chip, Grid } from '@material-ui/core';
-import GoogleMapReact from 'google-map-react';
-import MessageDescription from './MessageDescription';
+import { makeStyles, Typography, Tooltip, Dialog, Chip } from '@material-ui/core';
+
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-import { DialogContent, DialogTitle } from '../../../Dialog/Dialog';
-import { reduceByGroup } from '../../../../utils';
+import { DialogContent, DialogTitle } from '../../../../Dialog/Dialog';
+import { reduceByGroup } from '../../../../../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '50%',
-    width: 'calc(100% - 40px)',
-    padding: 20
-  },
-  title: {
-    color: theme.palette.secondary.main,
-    textAlign: 'left'
-  },
-  dialog: {
-    backgroundColor: 'rgba(17, 86, 123, 0.3)',
+    cursor: 'pointer',
+    marginBottom: 15
   },
   votes: {
     position: 'relative',
@@ -37,10 +28,18 @@ const useStyles = makeStyles((theme) => ({
   },
   open: {
     color: theme.palette.secondary.main,
-  }
+  },
+  name: {
+    width: '95%',
+  },
+  rowType: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
 }));
 
-const ItemSearchResult = ({
+const ItemMarker = ({
   address = '',
   icon = '',
   rate = 0,
@@ -88,7 +87,7 @@ const ItemSearchResult = ({
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          <Typography component="h4" variant="h4">{name}</Typography>
+          <Typography className={classes.name} component="h4" variant="h4">{name}</Typography>
 
           {
             address !== '' && (
@@ -121,7 +120,7 @@ const ItemSearchResult = ({
                     return (
                       <div 
                         key={group.reduce((key, current) => `${key}¤¤${current}`, '')}
-                        style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}
+                        style={classes.rowType}
                       >
                         {
                           group.map((type) => (
@@ -153,57 +152,4 @@ const ItemSearchResult = ({
   );
 };
 
-const ItemMapSearch = ({
-  apiKey = '',
-  by = '',
-  date = '',
-  items = [],
-  from = '',
-  lat = 0,
-  lng = 0, 
-}) => {
-  const classes = useStyles();
-
-  const center = {
-    lat,
-    lng
-  };
-
-  return (
-    <div className={classes.root}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: apiKey }}
-        defaultCenter={center}
-        defaultZoom={11}
-      >
-        {
-          items.map((item) => {
-            return (
-              <ItemSearchResult
-                address={item.address}
-                key={item.id}
-                icon={item.icon}
-                lat={item.lat}
-                lng={item.lng}
-                rate={item.rate}
-                name={item.name}
-                numberRate={item.numberRate}
-                internationalPhoneNumber={item.internationalPhoneNumber}
-                openNow={item.openNow}
-                openingWeekDays={item.openingWeekDays}
-                types={item.types}
-              />
-            );
-          })
-        }
-      </GoogleMapReact>
-      <MessageDescription
-        by={by}
-        date={date}
-        from={from}
-      />
-    </div>
-  );
-};
-
-export default ItemMapSearch;
+export default ItemMarker;

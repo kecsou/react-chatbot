@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Grid, Typography } from '@material-ui/core';
+import { makeStyles, Grid } from '@material-ui/core';
 import GoogleMapReact from 'google-map-react';
 import MessageDescription from './MessageDescription';
 
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ItemWhereAmI = ({
   apiKey = '',
+  by,
   date = '',
   from = '',
   lat = 0,
@@ -35,13 +36,6 @@ const ItemWhereAmI = ({
 
   return (
     <div className={classes.root}>
-      <Typography
-        className={classes.title}
-        variant="h6"
-        gutterBottom
-      >
-        Where am I: 
-      </Typography>
       <Grid container style={{ height: 200, marginBottom: 15 }}>
         <Grid item xs={4}>
           <GoogleMapReact
@@ -61,6 +55,7 @@ const ItemWhereAmI = ({
         </Grid>
       </Grid>
       <MessageDescription
+        by={by}
         date={date}
         from={from}
       />

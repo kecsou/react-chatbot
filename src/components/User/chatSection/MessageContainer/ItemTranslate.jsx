@@ -16,6 +16,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const ItemTranslate = ({
+  by = '',
   date = '',
   from = '',
   translations = [],
@@ -39,6 +40,7 @@ const ItemTranslate = ({
         </ul>
       </Card>
       <MessageDescription
+        by = {by}
         date={date}
         from={from}
       />

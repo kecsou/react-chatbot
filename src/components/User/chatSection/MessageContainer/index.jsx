@@ -2,15 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core';
 import ItemPlainMessage from './ItemPlainMessage';
-import ItemYoutubeMessage from './ItemYoutubeMessage';
-import ItemTMDB from './ItemTMDB';
+import ItemYoutubeMessage from './ItemYoutubeMessage/index';
+import ItemTMDB from './ItemTMDB/index';
 import ItemWeatherstack from './ItemWeatherstack';
 
 import './index.css';
 import ItemTranslate from './ItemTranslate';
 import ItemWhereAmI from './ItemWhereAmI';
-import ItemMapSearch from './ItemMapSearch';
-import ItemMapSearchNotFound from './ItemMapSearchNotFound';
+import ItemMapSearch from './ItemMapSearch/index';
+import ItemMapSearchNotFound from './ItemMapSearch/ItemMapSearchNotFound';
 
 const useStyle = makeStyles({
   root: {
