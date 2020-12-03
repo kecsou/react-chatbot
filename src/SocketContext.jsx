@@ -113,6 +113,11 @@ const SocketProvider = ({ children }) => {
         dispatch(actionAddMessage(message));
       });
 
+      socket.on('disconnect', (reason) => {
+        console.log('reason', reason);
+        logOut();
+      });
+
       setSocket(socket);
     });
   }, [dispatch, history]);
