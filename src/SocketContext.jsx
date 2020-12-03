@@ -120,7 +120,7 @@ const SocketProvider = ({ children }) => {
 
       setSocket(socket);
     });
-  }, [dispatch, history]);
+  }, [dispatch, history, logOut]);
 
   const logOut = useCallback(() => {
     localStorage.removeItem('username');
