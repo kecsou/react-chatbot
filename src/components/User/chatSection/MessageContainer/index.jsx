@@ -9,6 +9,8 @@ import ItemWeatherstack from './ItemWeatherstack';
 import './index.css';
 import ItemTranslate from './ItemTranslate';
 import ItemWhereAmI from './ItemWhereAmI';
+import ItemMapSearch from './ItemMapSearch';
+import ItemMapSearchNotFound from './ItemMapSearchNotFound';
 
 const useStyle = makeStyles({
   root: {
@@ -51,6 +53,7 @@ const MessageContainer = () => {
             case 'plain':
               return (
                 <ItemPlainMessage
+                  by={item.by}
                   key={item.id}
                   content={item.content}
                   date={item.date}
@@ -60,6 +63,7 @@ const MessageContainer = () => {
             case 'youtube':
               return (
                 <ItemYoutubeMessage
+                  by={item.by}
                   from={item.from}  
                   items={item.items}
                   key={item.id}
@@ -70,6 +74,7 @@ const MessageContainer = () => {
             case 'tmdb':
               return (
                 <ItemTMDB
+                  by={item.by}
                   date={item.date}
                   from={item.from}
                   items={item.items}
@@ -80,6 +85,7 @@ const MessageContainer = () => {
             case 'weatherstack':
               return (
                 <ItemWeatherstack
+                  by={item.by}  
                   date={item.date}
                   from={item.from}
                   key={item.id}
@@ -94,6 +100,7 @@ const MessageContainer = () => {
             case 'translation':
               return (
                 <ItemTranslate
+                  by={item.by}  
                   date={item.date}
                   from={item.from}
                   key={item.id}
@@ -104,6 +111,7 @@ const MessageContainer = () => {
             case 'whereami':
               return (
                 <ItemWhereAmI
+                  by={item.by}
                   apiKey={item.apiKey}
                   date={item.date}
                   from={item.from}
@@ -112,8 +120,33 @@ const MessageContainer = () => {
                   lng={item.lng}
                 />
               );
+            case 'mapsearch':
+              if (item.notfound) {
+                return (
+                  <ItemMapSearchNotFound
+                    by={item.by}
+                    date={item.date}  
+                    key={item.id}
+                    from={item.from}
+                    query={item.query}
+                  />
+                );
+              }
+
+              return (
+                <ItemMapSearch
+                  apiKey={item.apiKey}
+                  by={item.by}
+                  date={item.date}  
+                  items={item.items}
+                  key={item.id}
+                  from={item.from}
+                  lat={item.lat}
+                  lng={item.lng}
+                />
+              );
             default:
-              return (<div id={item.id}></div>);      
+              return (<div key={item.id}></div>);      
           }
         })
       }

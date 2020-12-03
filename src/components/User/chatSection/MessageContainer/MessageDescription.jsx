@@ -13,12 +13,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MessageDescription = ({ date = '', from = '' }) => {
+const MessageDescription = ({ date = '', from = '', by = '' }) => {
   const classes = useStyles();
   return (
     <Typography className={classes.desc}>
       <Typography>From </Typography>
       <Typography className={classes.descUsername}>{from} </Typography>
+      <Typography>by </Typography>
+      <Typography className={classes.descUsername}>{by} </Typography>
       <Typography>{getTextDate(date)}</Typography>
     </Typography>
   );

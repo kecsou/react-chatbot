@@ -24,35 +24,35 @@ export function getTextDate(dateString = '') {
 
   if (timePaste > year) {
     const number = parseInt(timePaste / year, 10);
-    return `Since ${number} year${S(number)}`;
+    return `${number} year${S(number)} ago`;
   }
 
   if (timePaste > month) {
     const number = parseInt(timePaste / month, 10);
-    return `Since ${number} month${S(number)}`;
+    return `${number} month${S(number)} ago`;
   }
 
   if (timePaste > week) {
     const number = parseInt(timePaste / week, 10);
-    return `Since ${number} week${S(number)}`;
+    return `${number} week${S(number)} ago`;
   }
 
   if (timePaste > day) {
     const number = parseInt(timePaste / day, 10);
-    return `Since ${number} day${S(number)}`;
+    return `${number} day${S(number)} ago`;
   }
 
   if (timePaste > hour) {
     const number = parseInt(timePaste / hour, 10);
-    return `Since ${number} hour${S(number)}`;
+    return `${number} hour${S(number)} ago`;
   }
 
   if (timePaste > minute) {
     const number = parseInt(timePaste / minute, 10);
-    return `Since ${number} minute${S(number)}`;
+    return `${number} minute${S(number)} ago`;
   }
 
-  return 'Now';
+  return 'now';
 }
 
 /**
@@ -89,3 +89,22 @@ export function getMonthAsString(monthAsNumber = 1) {
       return "January";
   }
 }
+
+/**
+ *
+ * @param {number} n
+ * @desc Get a function wich will group elements of an array by group
+ * Each groups will have the size you provided
+ * example group: [ i1,i2,in-1]
+ */
+export const reduceByGroup = (n = 2) => (acc, current, index) => {
+  if ((index % n) === 0) {
+    return [...acc, [current]];
+  }
+
+  const newAcc = [...acc];
+  const lastGroup = newAcc[newAcc.length - 1];
+  lastGroup.push(current);
+
+  return newAcc;
+};

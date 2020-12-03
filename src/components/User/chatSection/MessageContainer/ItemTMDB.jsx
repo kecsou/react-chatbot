@@ -6,10 +6,6 @@ import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
 
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
@@ -17,6 +13,7 @@ import Box from '@material-ui/core/Box';
 import MessageDescription from './MessageDescription';
 import './index';
 import { getMonthAsString } from '../../../../utils';
+import { DialogContent, DialogTitle } from '../../../Dialog/Dialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,21 +44,6 @@ const useStyles = makeStyles((theme) => ({
     background:
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
-  rootDialogTitile: {
-    margin: 0,
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.background.default
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-  rootDialogContent: {
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.background.default
-  },
   votes: {
     position: 'relative',
     left: 10,
@@ -74,27 +56,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main
   }
 }));
-
-const DialogTitle = ({ children, onClose, ...other }) => {
-  const classes = useStyles();
-  return (
-    <MuiDialogTitle disableTypography className={classes.rootDialogTitile} {...other}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-};
-
-const DialogContent = (props) => {
-  const classes = useStyles();
-  return (
-    <MuiDialogContent className={classes.rootDialogContent} {...props} />
-  );
-};
 
 const ItemPosterContainer = ({
   overview = '',
