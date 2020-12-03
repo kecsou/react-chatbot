@@ -65,18 +65,23 @@ const Auth = () => {
   const dispatch = useDispatch();
 
   const [error, setError] = useState("");
-  const { connected, loginIn, connecting } = useSocket();
+  const { connected, loginIn, connecting, errorAuth } = useSocket();
   const { description, name } = useSelector(selector);
 
   useEffect(() => {
     if (!connected) {
       const username = localStorage.getItem('username');
       const description = localStorage.getItem('description');
-      if (username && description) {
-        loginIn(username, description);
+      const connectionId = localStorage.getItem('connectionId');
+      if (username && description && connectionId) {
+        loginIn(username, description, connectionId);
       }
     }
   }, [connected, loginIn]);
+
+  useEffect(() => {
+    setError(errorAuth);
+  }, [errorAuth]);
 
   const handleChangeUsername = useCallback((e) => {
     dispatch(actionUserSetName(e.target.value));

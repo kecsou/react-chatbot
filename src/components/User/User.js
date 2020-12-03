@@ -31,9 +31,9 @@ const User = () => {
     if (!connected && !connecting) {
       const username = localStorage.getItem('username');
       const description = localStorage.getItem('description');
-
-      if (username && description) {
-        loginIn(username, description);
+      const connectionId = localStorage.getItem('connectionId');
+      if (username && description && connectionId) {
+        loginIn(username, description, connectionId);
       } else {
         logOut();
       }

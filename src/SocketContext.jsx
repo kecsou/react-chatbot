@@ -25,6 +25,7 @@ const serverAdress = process.env.REACT_APP_SERVER_ADRESS ? process.env.REACT_APP
 const defaultValue = {
   connected: false,
   connecting: false,
+  errorAuth: '',
   socket: null,
   socketOpened: false,
   loginIn: () => {},
@@ -59,6 +60,7 @@ const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
+  const [errorAuth, setErrorAuth] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -74,6 +76,7 @@ const SocketProvider = ({ children }) => {
   const logOut = useCallback(() => {
     localStorage.removeItem('username');
     localStorage.removeItem('description');
+    localStorage.removeItem('connectionId');
 
     dispatch(actionUserSetName(''));
     dispatch(actionUserSetDescription(''));
@@ -84,9 +87,9 @@ const SocketProvider = ({ children }) => {
     history.push('/');
   }, [dispatch, history, socket]);
 
-  const loginIn = useCallback((username, description) => {
-    setConnecting(true);
-    return new Promise(async (resolve) => {
+  const loginIn = useCallback(async (username, description, connectionId = '') => {
+    if (!connecting) {
+      setConnecting(true);
       const { latitude, longitude }  = await getPosition();
       const socket = io(serverAdress, {
         query: {
@@ -94,6 +97,7 @@ const SocketProvider = ({ children }) => {
           description,
           latitude,
           longitude,
+          connectionId,
         },
         transports: ['websocket', 'polling']
       });
@@ -104,7 +108,6 @@ const SocketProvider = ({ children }) => {
       dispatch(actionUserSetName(username));
       dispatch(actionUserSetDescription(description));
       socket.on('connect', () => {
-        resolve();
         setConnected(true);
         setConnecting(false);
         history.push('/user');
@@ -126,20 +129,32 @@ const SocketProvider = ({ children }) => {
         dispatch(actionAddMessage(message));
       });
 
+      socket.on('success-authent', (connectionId) => {
+        setErrorAuth('');
+        localStorage.setItem('connectionId', connectionId);
+      });
+
+      socket.on('error-authent', (error) => {
+        setErrorAuth(error);
+        localStorage.removeItem('username');
+        localStorage.removeItem('description');
+      });
+
       socket.on('disconnect', (reason) => {
         console.log('reason', reason);
         logOut();
       });
 
       setSocket(socket);
-    });
-  }, [dispatch, history, logOut]);
+    }
+  }, [connecting, dispatch, history, logOut]);
 
   return (
     <socketContext.Provider
       value={{
         connected,
         connecting,
+        errorAuth,
         socket,
         socketOpened: socket !== null && socket.connected,
         loginIn,
