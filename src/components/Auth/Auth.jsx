@@ -10,6 +10,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 import { useSocket } from '../../SocketContext';
 
@@ -48,6 +50,11 @@ const useStyles = makeStyles({
     position: 'absolute',
     top: 0,
     right: 0,
+  },
+  progress: {
+    position: 'absolute',
+    top: 'calc(50% - 50px)',
+    left: 'calc(50% - 50px)',
   }
 });
 
@@ -58,7 +65,7 @@ const Auth = () => {
   const dispatch = useDispatch();
 
   const [error, setError] = useState("");
-  const { connected, loginIn } = useSocket();
+  const { connected, loginIn, connecting } = useSocket();
   const { description, name } = useSelector(selector);
 
   useEffect(() => {
@@ -81,6 +88,9 @@ const Auth = () => {
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
+    if (connecting) {
+      return;
+    }
 
     if (name.trim() === '') {
       setError('You must provide a username');
@@ -94,7 +104,7 @@ const Auth = () => {
 
     setError('');
     await loginIn(name, description);
-  }, [description, loginIn, name]);
+  }, [connecting, description, loginIn, name]);
 
   return (
     <Grid className={classes.root}>
@@ -141,6 +151,14 @@ const Auth = () => {
                 {error}
               </Alert>
             </Fade>
+          )
+        }
+        {
+          connecting && (
+            <CircularProgress
+              className={classes.progress}
+              size={50}
+            />
           )
         }
       </Grid>
