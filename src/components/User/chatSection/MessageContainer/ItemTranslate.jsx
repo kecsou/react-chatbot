@@ -12,6 +12,9 @@ const useStyle = makeStyles((theme) => ({
     position: 'relative',
     padding: 15,
     backgroundColor: theme.palette.primary.main,
+  },
+  divider: {
+    border: `${theme.palette.background.default} solid 1px`
   }
 }));
 
@@ -28,7 +31,7 @@ const ItemTranslate = ({
     <div>
       <Card className={classes.root}>
         <Typography>Source: {source}</Typography>
-        <hr />
+        <hr className={classes.divider} />
         <ul>
           {
             translations.map((translation) => 
