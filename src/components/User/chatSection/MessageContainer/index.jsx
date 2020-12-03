@@ -55,10 +55,10 @@ const MessageContainer = () => {
               return (
                 <ItemPlainMessage
                   by={item.by}
-                  key={item.id}
                   content={item.content}
                   date={item.date}
                   from={item.from}
+                  key={item.id}
                 />
               );
 
@@ -66,6 +66,7 @@ const MessageContainer = () => {
               return (
                 <ItemYoutubeMessage
                   by={item.by}
+                  date={item.date}
                   from={item.from}  
                   items={item.items}
                   key={item.id}
@@ -92,8 +93,8 @@ const MessageContainer = () => {
                   by={item.by}  
                   date={item.date}
                   from={item.from}
-                  key={item.id}
                   humidity={item.humidity}
+                  key={item.id}
                   localtime={item.localtime}
                   query={item.query}
                   temperature={item.temperature}
@@ -109,16 +110,16 @@ const MessageContainer = () => {
                   date={item.date}
                   from={item.from}
                   key={item.id}
-                  translations={item.translations}
                   source={item.source}
+                  translations={item.translations}
                 />
               );
 
             case 'whereami':
               return (
                 <ItemWhereAmI
-                  by={item.by}
                   apiKey={item.apiKey}
+                  by={item.by}
                   date={item.date}
                   from={item.from}
                   key = {item.id}
@@ -133,9 +134,9 @@ const MessageContainer = () => {
                   apiKey={item.apiKey}
                   by={item.by}
                   date={item.date}  
+                  from={item.from}
                   items={item.items}
                   key={item.id}
-                  from={item.from}
                   lat={item.lat}
                   lng={item.lng}
                 />
@@ -157,8 +158,8 @@ const MessageContainer = () => {
                 <ItemUnexpectedError
                   by={item.by}
                   date={item.date}  
-                  key={item.id}
                   from={item.from}
+                  key={item.id}
                   query={item.query}
                 />
               );
