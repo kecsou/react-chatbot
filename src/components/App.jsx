@@ -14,6 +14,7 @@ import SocketProvider from '../SocketContext';
 import User from './User/User';
 import store from '../store';
 import Auth from './Auth/Auth';
+import NotFound from './NotFound';
 
 const theme = createMuiTheme({
   palette: {
@@ -68,11 +69,14 @@ const MainContainer = () => {
       unselectable="on"
     >
       <Switch>
-        <Route path="/user">
+        <Route exact path="/user">
           <User />
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           <Auth />
+        </Route>
+        <Route>
+          <NotFound />
         </Route>
       </Switch>
     </div>
