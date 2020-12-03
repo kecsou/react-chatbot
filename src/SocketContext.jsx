@@ -21,7 +21,7 @@ import {
   actionSetUserList,
 } from './components/User/members/action';
 
-const serverAdress = process.env.serverAdress ? process.env.serverAdress : 'http://localhost';
+const serverAdress = process.env.REACT_APP_SERVER_ADRESS ? process.env.REACT_APP_SERVER_ADRESS : 'http://localhost';
 const defaultValue = {
   connected: false,
   connecting: false,
