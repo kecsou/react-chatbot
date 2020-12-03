@@ -71,6 +71,19 @@ const SocketProvider = ({ children }) => {
     }
   }, [socket]);
 
+  const logOut = useCallback(() => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('description');
+
+    dispatch(actionUserSetName(''));
+    dispatch(actionUserSetDescription(''));
+    if (socket) {
+      socket.close();
+    }
+
+    history.push('/');
+  }, [dispatch, history, socket]);
+
   const loginIn = useCallback((username, description) => {
     setConnecting(true);
     return new Promise(async (resolve) => {
@@ -121,19 +134,6 @@ const SocketProvider = ({ children }) => {
       setSocket(socket);
     });
   }, [dispatch, history, logOut]);
-
-  const logOut = useCallback(() => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('description');
-
-    dispatch(actionUserSetName(''));
-    dispatch(actionUserSetDescription(''));
-    if (socket) {
-      socket.close();
-    }
-
-    history.push('/');
-  }, [dispatch, history, socket]);
 
   return (
     <socketContext.Provider
